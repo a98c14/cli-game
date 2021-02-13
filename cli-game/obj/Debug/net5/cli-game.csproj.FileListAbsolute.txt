@@ -1,0 +1,16 @@
+E:\Projects\cli-game\cli-game\bin\Debug\net5\cli-game.exe
+E:\Projects\cli-game\cli-game\bin\Debug\net5\cli-game.deps.json
+E:\Projects\cli-game\cli-game\bin\Debug\net5\cli-game.runtimeconfig.json
+E:\Projects\cli-game\cli-game\bin\Debug\net5\cli-game.runtimeconfig.dev.json
+E:\Projects\cli-game\cli-game\bin\Debug\net5\cli-game.dll
+E:\Projects\cli-game\cli-game\bin\Debug\net5\ref\cli-game.dll
+E:\Projects\cli-game\cli-game\bin\Debug\net5\cli-game.pdb
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.csprojAssemblyReference.cache
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.AssemblyInfoInputs.cache
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.AssemblyInfo.cs
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.csproj.CoreCompileInputs.cache
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.dll
+E:\Projects\cli-game\cli-game\obj\Debug\net5\ref\cli-game.dll
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.pdb
+E:\Projects\cli-game\cli-game\obj\Debug\net5\cli-game.genruntimeconfig.cache
