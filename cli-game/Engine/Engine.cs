@@ -129,17 +129,18 @@ namespace Game.Engine
             handle = CreateFile("CONOUT$", 0x40000000, 2, IntPtr.Zero, FileMode.Open, 0, IntPtr.Zero);
             buffer = new CharInfo[width * height];
             rect = new SmallRect() { Left = 0, Top = 0, Right = width, Bottom = height };
-
+            var rand = new Random();            
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
+                    var b = rand.Next(0, 100) > 90;
                     buffer[x + width * y] = new CharInfo
                     {
-                        Attributes = (short)CharAttribute.BACKGROUND_GREEN,
+                        Attributes = (short)CharAttribute.FOREGROUND_GREEN,
                         Char = new CharUnion
                         {
-                            UnicodeChar = '_',
+                            UnicodeChar = b ? 'I' : '_',
                         }
                     };
                 }

@@ -31,7 +31,7 @@ namespace Game
             while (true)
             {
                 var player = m_PlayerAnimation[frameCount % m_PlayerAnimation.Length];
-                engine.Set(playerPos, player, CharAttribute.BACKGROUND_RED | CharAttribute.BACKGROUND_BLUE);
+                engine.Set(playerPos, player, CharAttribute.BACKGROUND_GREEN);
 
                 if (Console.KeyAvailable)
                 {
