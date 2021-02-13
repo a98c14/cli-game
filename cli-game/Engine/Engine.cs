@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using Game.Vector;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -6,10 +7,7 @@ using System.Runtime.InteropServices;
 namespace Game.Engine
 {
     public class GameEngine
-    {
-        [DllImport("user32.dll")]
-        static extern short GetKeyState(VirtualKeyStates nVirtKey);
-
+    { 
         [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         static extern SafeFileHandle CreateFile(
             string fileName,
@@ -29,7 +27,7 @@ namespace Game.Engine
             ref SmallRect lpWriteRegion);
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct SmallRect
+        private struct SmallRect
         {
             public short Left;
             public short Top;
@@ -38,7 +36,7 @@ namespace Game.Engine
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct Coord
+        private struct Coord
         {
             public short X;
             public short Y;
@@ -51,20 +49,21 @@ namespace Game.Engine
         };
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct CharUnion
+        private struct CharUnion
         {
             [FieldOffset(0)] public char UnicodeChar;
             [FieldOffset(0)] public byte AsciiChar;
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct CharInfo
+        private struct CharInfo
         {
             [FieldOffset(0)] public CharUnion Char;
             [FieldOffset(2)] public short Attributes;
         }
 
         private readonly SafeFileHandle m_FileHandle;
+        private readonly CharInfo[] m_InitialBuffer;
         private readonly CharInfo[] m_DrawBuffer;
         private readonly SmallRect m_SmallRect;
 
@@ -73,17 +72,30 @@ namespace Game.Engine
 
         public GameEngine(short width, short height)
         {
-            CreateBuffer(width, height, out m_FileHandle, out m_DrawBuffer, out m_SmallRect);
+            m_Width = width;
+            m_Height = height;
+
+            // Create the inital state buffer
+            CreateBuffer(width, height, out m_FileHandle, out m_InitialBuffer, out m_SmallRect);
+
+            // Copy the contents to draw buffer
+            m_DrawBuffer = new CharInfo[m_InitialBuffer.Length];
+            Array.Copy(m_InitialBuffer, m_DrawBuffer, m_DrawBuffer.Length);
         }
 
-        public short GetKeyStates(VirtualKeyStates keyState)
+        public void ClearBuffer()
         {
-            return GetKeyState(keyState);
+            Array.Copy(m_InitialBuffer, m_DrawBuffer, m_InitialBuffer.Length);
         }
 
         public void Draw()
         {
             DrawBuffer(m_FileHandle, m_DrawBuffer, m_SmallRect);
+        }
+
+        public void Set(Vector2 pos, char c, CharAttribute attr = CharAttribute.FOREGROUND_RED)
+        {
+            Set(pos.x, pos.y, c, attr);
         }
 
         public void Set(int x, int y, char c, CharAttribute attr = CharAttribute.FOREGROUND_RED)
@@ -124,10 +136,10 @@ namespace Game.Engine
                 {
                     buffer[x + width * y] = new CharInfo
                     {
-                        Attributes = 3,
+                        Attributes = (short)CharAttribute.BACKGROUND_GREEN,
                         Char = new CharUnion
                         {
-                            AsciiChar = 40,
+                            UnicodeChar = '_',
                         }
                     };
                 }
